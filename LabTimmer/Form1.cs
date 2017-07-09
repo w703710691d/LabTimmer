@@ -135,9 +135,10 @@ namespace LabTimmer
             Control.CheckForIllegalCrossThreadCalls = false;
             Thread.CurrentThread.IsBackground = true;
             ServicePointManager.DefaultConnectionLimit = 500;
-            if (this.getLocalMac() != null)
+            string retMac = getLocalMac();
+            if (String.IsNullOrEmpty(retMac))
             {
-                this.MACIP = this.getLocalMac();
+                this.MACIP = retMac;
                 string[] s_arr = this.MACIP.Split(new char[]
                 {
                     ':'
@@ -319,9 +320,10 @@ namespace LabTimmer
                     ManagementObject mo = (ManagementObject)enumerator.Current;
                     if (mo["IPEnabled"].ToString() == "True")
                     {
-                        if (!mo.ToString().ToLower().Contains("vmnetadapter") && !mo.ToString().ToLower().Contains("ppoe") && !mo.ToString().ToLower().Contains("bthpan") && !mo.ToString().ToLower().Contains("tapvpn") && !mo.ToString().ToLower().Contains("ndisip") && !mo.ToString().ToLower().Contains("sinforvnic") && !mo["Caption"].ToString().ToLower().Contains("virtual") && !mo["Caption"].ToString().ToLower().Contains("microsoft"))
+                        if(GetLuYouMac.isVialdNetCardName(mo["Description"].ToString()))
                         {
                             mac = mo["MacAddress"].ToString();
+                            Time_Dates.TimeDates.WriteErroTOLog("Your mac address is " + mac);
                         }
                     }
                 }
@@ -418,9 +420,10 @@ namespace LabTimmer
         {
             this.LUYOU_MAC = GetLuYouMac.GetMac(ReadXML.readMcaMsg());
             this.YOUXIAN_IP = GetLuYouMac.GettrueIpV4();
-            if (this.getLocalMac() != null)
+            string retMac = getLocalMac();
+            if (String.IsNullOrEmpty(retMac))
             {
-                this.MACIP = this.getLocalMac();
+                this.MACIP = retMac;
                 string[] s_arr = this.MACIP.Split(new char[]
                 {
                     ':'

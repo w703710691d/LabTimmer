@@ -7,6 +7,20 @@ namespace Get_LuYouMac
 {
     internal class GetLuYouMac
     {
+        static public bool isVialdNetCardName(string name)
+        {
+            name = name.ToLower();
+            if (name.Contains("ppoe")) return false;
+            if (name.Contains("microsoft")) return false;
+            if (name.Contains("virtual")) return false;
+            if (name.Contains("bluetooth")) return false;
+            if (name.Contains("vmnet")) return false;
+            if (name.Contains("bthpan")) return false;
+            if (name.Contains("vpn")) return false;
+            if (name.Contains("ndisip")) return false;
+            if (name.Contains("sinforvnic")) return false;
+            return true;
+        }
         public static string GetMac(List<String> mac_list)
         {
             Process cmd = new Process();
@@ -51,7 +65,7 @@ namespace Get_LuYouMac
             for (int i = 0; i < array.Length; i++)
             {
                 NetworkInterface adapter = array[i];
-                if (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet && adapter.OperationalStatus == OperationalStatus.Up && !adapter.Name.Contains("tooth"))
+                if (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet && adapter.OperationalStatus == OperationalStatus.Up && isVialdNetCardName(adapter.Description))
                 {
                     IPInterfaceProperties ip = adapter.GetIPProperties();
                     UnicastIPAddressInformationCollection ipCollection = ip.UnicastAddresses;
