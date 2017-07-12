@@ -136,7 +136,7 @@ namespace LabTimmer
             Thread.CurrentThread.IsBackground = true;
             ServicePointManager.DefaultConnectionLimit = 500;
             string retMac = getLocalMac();
-            if (String.IsNullOrEmpty(retMac))
+            if (!String.IsNullOrEmpty(retMac))
             {
                 this.MACIP = retMac;
                 string[] s_arr = this.MACIP.Split(new char[]
@@ -421,7 +421,7 @@ namespace LabTimmer
             this.LUYOU_MAC = GetLuYouMac.GetMac(ReadXML.readMcaMsg());
             this.YOUXIAN_IP = GetLuYouMac.GettrueIpV4();
             string retMac = getLocalMac();
-            if (String.IsNullOrEmpty(retMac))
+            if (!String.IsNullOrEmpty(retMac))
             {
                 this.MACIP = retMac;
                 string[] s_arr = this.MACIP.Split(new char[]
